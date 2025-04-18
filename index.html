@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora da Lei de Ohm + Potência</title>
+    <style>
+        body {
+
+            background-image: url(images.jpg);
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #a0a0a7;
+        }
+
+        .container {
+            text-align: center;
+            background-color: rgb(157, 180, 245);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(238, 7, 7, 0.1);
+        }
+
+        input[type="number"] {
+            padding: 10px;
+            margin: 10px;
+            width: 200px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            padding: 10px 80px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #06bf10;
+        }
+
+        #resultado {
+            font-size: 20px;
+            margin-top: 20px;
+            font-weight: bold;
+            color: #101010;
+        }
+
+        h2 {
+            color: rgb(88, 9, 214);
+        }
+
+        .p1 {
+            color: blueviolet;
+            font-weight: bold;
+        }
+
+        .tabela-resultado {
+            margin: 0 auto;
+            margin-top: 20px;
+            border-collapse: collapse;
+            font-size: 18px;
+            background-color: #f4f6ff;
+            box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .tabela-resultado th,
+        .tabela-resultado td {
+            padding: 10px 20px;
+            border-bottom: 1px solid #ccc;
+            text-align: left;
+        }
+
+        .tabela-resultado th {
+            background-color: #021972;
+            color: white;
+            font-weight: bold;
+        }
+
+        .tabela-resultado tr:last-child td {
+            border-bottom: none;
+        }
+
+        .r {
+            color: rgb(37, 2, 69);
+            font-weight: bold;
+        }
+
+        .c {
+            color: #3b024e;
+            font-weight: bold;
+        }
+
+        .t {
+            color: #250249;
+            font-weight: bold;
+        }
+
+        .p {
+            color: #290250;
+            font-weight: bold;
+        }
+
+        p {
+            color: #0d068a;
+            font-weight: bold;
+        }
+
+        .cal {
+            font-weight: bold;
+            font-size: 120%;
+        }
+    </style>
+</head>
+
+<body>
+
+
+    <div class="container">
+        <h2>
+            <p class="p1">Ruberlandio</p>Calculadora da Lei de Ohm
+        </h2>
+        <p>Preencha dois valores para calcular.</p>
+
+        <label for="voltagem" class="t">Tensão (V):</label>
+        <input type="number" id="voltagem" placeholder="Tensão (V)" step="any"><br>
+
+        <label for="corrente" class="c">Corrente (I):</label>
+        <input type="number" id="corrente" placeholder="Corrente (I)" step="any"><br>
+
+        <label for="resistencia" class="r">Resistor (R):</label>
+        <input type="number" id="resistencia" placeholder="Resistência (R)" step="any"><br>
+
+        <label for="potencia" class="p">Potência (P):</label>
+        <input type="number" id="potencia" placeholder="Potência (W)" step="any"><br><br>
+
+        <button onclick="calcular()" class="cal">Calcular</button>
+        <div id="resultado"></div>
+    </div>
+
+    <script>
+        function calcular() {
+            const V = parseFloat(document.getElementById("voltagem").value);
+            const I = parseFloat(document.getElementById("corrente").value);
+            const R = parseFloat(document.getElementById("resistencia").value);
+            const P = parseFloat(document.getElementById("potencia").value);
+            const resultado = document.getElementById("resultado");
+
+            resultado.textContent = "";
+            resultado.style.color = "black";
+
+            // Identifica quais variáveis foram preenchidas
+            const inputs = [!isNaN(V), !isNaN(I), !isNaN(R), !isNaN(P)].filter(Boolean).length;
+
+            if (inputs < 2) {
+                resultado.textContent = "Por favor, preencha pelo menos dois valores para calcular os outros.";
+                resultado.style.color = "red";
+                return;
+            }
+
+            let tensao = V, corrente = I, resistencia = R, potencia = P;
+
+            // Cálculos baseados em combinações de dois valores
+            if (!isNaN(V) && !isNaN(I)) {
+                resistencia = V / I;
+                potencia = V * I;
+            } else if (!isNaN(V) && !isNaN(R)) {
+                corrente = V / R;
+                potencia = (V * V) / R;
+            } else if (!isNaN(I) && !isNaN(R)) {
+                tensao = I * R;
+                potencia = I * I * R;
+            } else if (!isNaN(V) && !isNaN(P)) {
+                corrente = P / V;
+                resistencia = V * V / P;
+            } else if (!isNaN(I) && !isNaN(P)) {
+                tensao = P / I;
+                resistencia = P / (I * I);
+            } else if (!isNaN(R) && !isNaN(P)) {
+                corrente = Math.sqrt(P / R);
+                tensao = corrente * R;
+            }
+
+            // Exibe os resultados
+            resultado.innerHTML = `
+    <table class="tabela-resultado">
+      <tr><th>Grandeza</th><th>Valor</th></tr>
+      <tr><td>Tensão (V)</td><td>${formata(tensao)} V</td></tr>
+      <tr><td>Corrente (I)</td><td>${formata(corrente)} A</td></tr>
+      <tr><td>Resistência (R)</td><td>${formata(resistencia)} Ω</td></tr>
+      <tr><td>Potência (P)</td><td>${formata(potencia)} W</td></tr>
+    </table>
+  `;
+            resultado.style.color = "green";
+        }
+
+        // Função de formatação para remover zeros à direita e garantir 1 casa decimal quando necessário
+        function formata(valor) {
+            if (!isNaN(valor)) {
+                // Se o número for inteiro, mostra sem casas decimais, senão, com uma casa decimal
+                return valor % 1 === 0 ? valor.toFixed(0) : valor.toFixed(1);
+            }
+            return "-";
+        }
+    </script>
+</body>
+
+</html>
