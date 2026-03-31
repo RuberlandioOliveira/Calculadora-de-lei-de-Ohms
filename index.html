@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -20,7 +22,7 @@
 
         .container {
             text-align: center;
-            background-color: rgb(157, 180, 245);
+            background-color: rgb(119, 134, 177);
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 4px 10px rgba(238, 7, 7, 0.1);
@@ -120,6 +122,10 @@
             font-weight: bold;
             font-size: 120%;
         }
+
+        .autor {
+            color: #210244;
+        }
     </style>
 </head>
 
@@ -128,7 +134,7 @@
 
     <div class="container">
         <h2>
-            <p class="p1">Autor:Ruberlandio</p>Calculadora da Lei de Ohm
+            Calculadora da Lei de Ohm
         </h2>
         <p>Preencha dois valores para calcular.</p>
 
@@ -199,6 +205,8 @@
       <tr><td>Corrente (I)</td><td>${formata(corrente)} A</td></tr>
       <tr><td>Resistência (R)</td><td>${formata(resistencia)} Ω</td></tr>
       <tr><td>Potência (P)</td><td>${formata(potencia)} W</td></tr>
+      <td class= "autor">Desenvolvido por Ruberlandio Oliveira </td>
+      
     </table>
   `;
             resultado.style.color = "green";
@@ -214,8 +222,3 @@
         }
     </script>
 </body>
-
-
-</html>
-
-
