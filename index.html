@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -9,40 +7,59 @@
     <title>Calculadora da Lei de Ohm + Potência</title>
     <style>
         body {
-
-            background-image: url(https://picsum.photos/1920/1080);
+            background-image: url(https://picsum.photos);
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
             font-family: Arial, sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            min-height: 100vh;
             margin: 0;
             background-color: #a0a0a7;
+            padding: 20px;
+            box-sizing: border-box;
         }
 
         .container {
             text-align: center;
-            background-color: rgb(119, 134, 177);
+            background-color: rgba(119, 134, 177, 0.95);
             padding: 20px;
             border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(238, 7, 7, 0.1);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            width: 100%;
+            max-width: 400px;
+            box-sizing: border-box;
+        }
+
+        label {
+            display: block;
+            margin-top: 10px;
+            text-align: left;
+            font-weight: bold;
         }
 
         input[type="number"] {
-            padding: 10px;
-            margin: 10px;
-            width: 200px;
+            padding: 12px;
+            margin: 5px 0 15px 0;
+            width: 100%;
             border-radius: 5px;
             border: 1px solid #ccc;
+            box-sizing: border-box;
+            font-size: 16px;
         }
 
         button {
-            padding: 10px 80px;
+            width: 100%;
+            padding: 15px;
             background-color: #4CAF50;
             color: white;
             border: none;
             border-radius: 5px;
             cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: bold;
         }
 
         button:hover {
@@ -50,107 +67,89 @@
         }
 
         #resultado {
-            font-size: 20px;
             margin-top: 20px;
-            font-weight: bold;
-            color: #101010;
-        }
-
-        h2 {
-            color: rgb(88, 9, 214);
-        }
-
-        .p1 {
-            color: blueviolet;
-            font-weight: bold;
+            width: 100%;
         }
 
         .tabela-resultado {
-            margin: 0 auto;
-            margin-top: 20px;
+            width: 100%;
             border-collapse: collapse;
-            font-size: 18px;
+            font-size: 16px;
             background-color: #f4f6ff;
-            box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
-            border-radius: 6px;
+            border-radius: 8px;
             overflow: hidden;
         }
 
         .tabela-resultado th,
         .tabela-resultado td {
-            padding: 10px 20px;
-            border-bottom: 1px solid #ccc;
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
             text-align: left;
         }
 
         .tabela-resultado th {
             background-color: #021972;
             color: white;
-            font-weight: bold;
         }
 
-        .tabela-resultado tr:last-child td {
-            border-bottom: none;
+        /* Estilo do rodapé do desenvolvedor dentro da tabela */
+        .autor-row {
+            background-color: #e0e4f5;
+            font-size: 12px;
+            text-align: center !important;
+            color: #210244;
         }
 
-        .r {
-            color: rgb(37, 2, 69);
-            font-weight: bold;
-        }
-
-        .c {
-            color: #3b024e;
-            font-weight: bold;
-        }
-
-        .t {
-            color: #250249;
-            font-weight: bold;
-        }
-
-        .p {
-            color: #290250;
-            font-weight: bold;
+        h2 {
+            color: rgb(88, 9, 214);
+            font-size: 1.5rem;
+            margin-top: 0;
         }
 
         p {
             color: #0d068a;
             font-weight: bold;
+            margin-bottom: 20px;
         }
 
-        .cal {
-            font-weight: bold;
-            font-size: 120%;
+        .t {
+            color: #250249;
         }
 
-        .autor {
-            color: #210244;
+        .c {
+            color: #3b024e;
+        }
+
+        .r {
+            color: rgb(37, 2, 69);
+        }
+
+        .p {
+            color: #290250;
         }
     </style>
 </head>
 
 <body>
 
-
     <div class="container">
-        <h2>
-            Calculadora da Lei de Ohm
-        </h2>
+        <h2>Calculadora da Lei de Ohm</h2>
         <p>Preencha dois valores para calcular.</p>
 
         <label for="voltagem" class="t">Tensão (V):</label>
-        <input type="number" id="voltagem" placeholder="Tensão (V)" step="any"><br>
+        <input type="number" id="voltagem" placeholder="Ex: 220" step="any">
 
         <label for="corrente" class="c">Corrente (I):</label>
-        <input type="number" id="corrente" placeholder="Corrente (I)" step="any"><br>
+        <input type="number" id="corrente" placeholder="Ex: 10" step="any">
 
         <label for="resistencia" class="r">Impedância (Z):</label>
-        <input type="number" id="resistencia" placeholder="Resistência (R)" step="any"><br>
+        <input type="number" id="resistencia" placeholder="Ex: 22" step="any">
 
-        <label for="potencia" class="p">Potência (P):</label>
-        <input type="number" id="potencia" placeholder="Potência (W)" step="any"><br><br>
+        <label for="potencia" class="p">Potência (W):</label>
+        <input type="number" id="potencia" placeholder="Ex: 2200" step="any">
 
-        <button onclick="calcular()" class="cal">Calcular</button>
+        <button onclick="calcular()">Calcular</button>
+
         <div id="resultado"></div>
     </div>
 
@@ -162,63 +161,47 @@
             const P = parseFloat(document.getElementById("potencia").value);
             const resultado = document.getElementById("resultado");
 
-            resultado.textContent = "";
-            resultado.style.color = "black";
+            const inputsCount = [!isNaN(V), !isNaN(I), !isNaN(R), !isNaN(P)].filter(Boolean).length;
 
-            // Identifica quais variáveis foram preenchidas
-            const inputs = [!isNaN(V), !isNaN(I), !isNaN(R), !isNaN(P)].filter(Boolean).length;
-
-            if (inputs < 2) {
-                resultado.textContent = "Por favor, preencha pelo menos dois valores para calcular os outros.";
-                resultado.style.color = "red";
+            if (inputsCount < 2) {
+                resultado.innerHTML = "<span style='color:red; font-weight:bold;'>Preencha pelo menos dois valores!</span>";
                 return;
             }
 
             let tensao = V, corrente = I, resistencia = R, potencia = P;
 
-            // Cálculos baseados em combinações de dois valores
             if (!isNaN(V) && !isNaN(I)) {
-                resistencia = V / I;
-                potencia = V * I;
+                resistencia = V / I; potencia = V * I;
             } else if (!isNaN(V) && !isNaN(R)) {
-                corrente = V / R;
-                potencia = (V * V) / R;
+                corrente = V / R; potencia = (V * V) / R;
             } else if (!isNaN(I) && !isNaN(R)) {
-                tensao = I * R;
-                potencia = I * I * R;
+                tensao = I * R; potencia = I * I * R;
             } else if (!isNaN(V) && !isNaN(P)) {
-                corrente = P / V;
-                resistencia = V * V / P;
+                corrente = P / V; resistencia = V * V / P;
             } else if (!isNaN(I) && !isNaN(P)) {
-                tensao = P / I;
-                resistencia = P / (I * I);
+                tensao = P / I; resistencia = P / (I * I);
             } else if (!isNaN(R) && !isNaN(P)) {
-                corrente = Math.sqrt(P / R);
-                tensao = corrente * R;
+                corrente = Math.sqrt(P / R); tensao = corrente * R;
             }
 
-            // Exibe os resultados
+            // O nome do desenvolvedor agora só aparece aqui, após o cálculo
             resultado.innerHTML = `
-    <table class="tabela-resultado">
-      <tr><th>Grandeza</th><th>Valor</th></tr>
-      <tr><td>Tensão (V)</td><td>${formata(tensao)} V</td></tr>
-      <tr><td>Corrente (I)</td><td>${formata(corrente)} A</td></tr>
-      <tr><td>Resistência (R)</td><td>${formata(resistencia)} Ω</td></tr>
-      <tr><td>Potência (P)</td><td>${formata(potencia)} W</td></tr>
-      <td class= "autor">Desenvolvido por: Ruberlandio Oliveira </td>
-      
-    </table>
-  `;
-            resultado.style.color = "green";
+                <table class="tabela-resultado">
+                  <tr><th>Grandeza</th><th>Valor</th></tr>
+                  <tr><td>Tensão</td><td>${formata(tensao)} V</td></tr>
+                  <tr><td>Corrente</td><td>${formata(corrente)} A</td></tr>
+                  <tr><td>Resistência</td><td>${formata(resistencia)} Ω</td></tr>
+                  <tr><td>Potência</td><td>${formata(potencia)} W</td></tr>
+                  <tr><td colspan="2" class="autor-row">Desenvolvido por: Ruberlandio Oliveira</td></tr>
+                </table>
+            `;
         }
 
-        // Função de formatação para remover zeros à direita e garantir 1 casa decimal quando necessário
         function formata(valor) {
-            if (!isNaN(valor)) {
-                // Se o número for inteiro, mostra sem casas decimais, senão, com uma casa decimal
-                return valor % 1 === 0 ? valor.toFixed(0) : valor.toFixed(1);
-            }
-            return "-";
+            if (isNaN(valor) || !isFinite(valor)) return "-";
+            return valor % 1 === 0 ? valor.toFixed(0) : valor.toFixed(2);
         }
     </script>
 </body>
+
+</html>
