@@ -199,7 +199,7 @@
 
         function formata(valor) {
             if (isNaN(valor) || !isFinite(valor)) return "-";
-            return valor % 1 === 0 ? valor.toFixed(0) : valor.toFixed(2);
+            return valor % 1 === 0 ? valor.toFixed(0) : valor.toFixed(1);
         }
     </script>
 </body>
